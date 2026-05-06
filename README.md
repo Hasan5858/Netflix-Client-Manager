@@ -6,7 +6,7 @@ A robust, full-stack subscription management system built with **Astro**, **Reac
 
 *   **Admin Dashboard**: Manage Master Accounts (Netflix, HBO, ChatGPT, etc.) and assign them to clients.
 *   **Client Portal**: Secure access for clients using unique API Keys to view their assigned credentials and service links.
-*   **Automated Link Fetching**: Integration with a background worker to retrieve temporary household access links.
+*   **Automated Link Fetching**: Integration with a background worker to retrieve temporary household access links. (Powered by [household-otp-automation](https://github.com/Hasan5858/household-otp-automation))
 *   **Restriction Logic**: Built-in 7-day restriction for certain services (e.g., ChatGPT) to prevent abuse.
 *   **Modern UI**: High-fidelity dark mode interface inspired by premium streaming platforms, using Tailwind CSS and Lucide icons.
 
@@ -32,8 +32,15 @@ Copy your environment variables to a `.dev.vars` file (for local development):
 
 ```bash
 AUTH_SECRET=your_secret_here
-WORKER_URL=https://your-worker.workers.dev/get-link
+WORKER_URL=https://your-worker.workers.dev/get-link # The endpoint from household-otp-automation
 ```
+
+### 3. Backend Worker Setup
+
+To handle automated link extraction, you must deploy the [household-otp-automation](https://github.com/Hasan5858/household-otp-automation) worker.
+1. Clone the linked repo.
+2. Deploy to Cloudflare Workers.
+3. Use that worker's URL for the `WORKER_URL` field above.
 
 Update the placeholders in `wrangler.toml` if deploying to Cloudflare.
 
