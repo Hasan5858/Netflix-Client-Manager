@@ -13,13 +13,13 @@ A robust, full-stack subscription management system built with **Astro**, **Reac
 ## 📸 Screenshots
 
 ### Admin Dashboard
-![Admin Dashboard](/screenshots/Admin-Netflix-Resale-Manager.png)
+![Admin Dashboard](public/screenshots/Admin-Netflix-Resale-Manager.png)
 
 ### Account Management
-![Account Management](/screenshots/Admin-Netflix-Resale-Manager%20(1).png)
+![Account Management](public/screenshots/Admin-Netflix-Resale-Manager%20(1).png)
 
 ### Admin Login
-![Admin Login](/screenshots/Master-Admin-Login.png)
+![Admin Login](public/screenshots/Master-Admin-Login.png)
 
 
 ## 🛠 Tech Stack
