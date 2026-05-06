@@ -1,4 +1,4 @@
-# Netflix Client Manager (Portfolio Edition)
+# Netflix Client Manager
 
 A robust, full-stack subscription management system built with **Astro**, **React**, and **Cloudflare D1**. This project was designed to manage shared Netflix (and other services) credentials for clients with automated restriction handling.
 
