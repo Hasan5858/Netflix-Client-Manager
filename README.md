@@ -10,6 +10,18 @@ A robust, full-stack subscription management system built with **Astro**, **Reac
 *   **Restriction Logic**: Built-in 7-day restriction for certain services (e.g., ChatGPT) to prevent abuse.
 *   **Modern UI**: High-fidelity dark mode interface inspired by premium streaming platforms, using Tailwind CSS and Lucide icons.
 
+## 📸 Screenshots
+
+### Admin Dashboard
+![Admin Dashboard](/screenshots/Admin-Netflix-Resale-Manager.png)
+
+### Account Management
+![Account Management](/screenshots/Admin-Netflix-Resale-Manager%20(1).png)
+
+### Admin Login
+![Admin Login](/screenshots/Master-Admin-Login.png)
+
+
 ## 🛠 Tech Stack
 
 *   **Framework**: Astro 5 (Hybrid Rendering)
