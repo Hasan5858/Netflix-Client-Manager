@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { KeyRound, ArrowRight } from 'lucide-react';
+
+if (Astro.request.method === 'POST') {
+  try {
+    const data = await Astro.request.formData();
+    const apiKey = data.get('apiKey');
+
+    if (apiKey) {
+      // Simple verification
+      const { results } = await Astro.locals.runtime.env.DB.prepare(
+        'SELECT * FROM clients WHERE api_key = ?'
+      ).bind(apiKey).all();
+
+      if (results.length > 0) {
+         // Set cookie and redirect
+         Astro.cookies.set('client_api_key', apiKey.toString(), {
+            path: '/',
+            httpOnly: true,
+            secure: true,
+            maxAge: 60 * 60 * 24 * 30 // 30 days
+         });
+         return Astro.redirect('/client/dashboard');
+      }
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+---
+
+<Layout title="Client Login">
+  <div class="min-h-screen flex items-center justify-center p-6 bg-black">
+    <div class="w-full max-w-md space-y-8">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold text-red-600 tracking-tighter mb-2">NETFLIX <span class="text-white text-2xl font-normal">Services</span></h1>
+            <p class="text-gray-400">Enter your access key to continue</p>
+        </div>
+
+        <form method="POST" class="mt-8 space-y-6">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                    <KeyRound size={20} />
+                </div>
+                <input 
+                    type="text" 
+                    name="apiKey" 
+                    required 
+                    class="block w-full bg-[#333] border border-transparent rounded-lg py-3 pl-10 pr-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-[#444] transition"
+                    placeholder="key_xxxxxxxx"
+                />
+            </div>
+
+            <button type="submit" class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition">
+                Access Dashboard
+                <span class="absolute right-0 inset-y-0 flex items-center pr-3">
+                    <ArrowRight size={16} className="text-red-300 group-hover:text-white transition" />
+                </span>
+            </button>
+        </form>
+    </div>
+  </div>
+</Layout>

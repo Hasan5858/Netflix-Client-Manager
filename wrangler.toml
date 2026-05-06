@@ -1,0 +1,19 @@
+name = "netflix-client-manager"
+pages_build_output_dir = "dist"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "netdb"
+database_id = "your-database-id-here"
+
+[[services]]
+binding = "HOUSEHOLD"
+service = "household"
+
+[vars]
+AUTH_SECRET = "your-auth-secret-here"
+WORKER_URL = "https://your-worker-subdomain.workers.dev/get-link"
+
+

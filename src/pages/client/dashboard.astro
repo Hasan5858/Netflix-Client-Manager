@@ -1,0 +1,54 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ClientDashboard from '../../components/ClientDashboard';
+
+const apiKey = Astro.cookies.get('client_api_key')?.value;
+
+if (!apiKey) {
+  return Astro.redirect('/login');
+}
+
+const db = Astro.locals.runtime.env.DB;
+
+// 1. Get Client Info
+const { results: clientResults } = await db.prepare(
+  'SELECT * FROM clients WHERE api_key = ?'
+).bind(apiKey).all();
+
+const client = clientResults[0] as any;
+
+if (!client) {
+  return Astro.redirect('/login');
+}
+
+// 2. Get Services (Join with Master Emails for Netflix credentials)
+const { results: services } = await db.prepare(
+  `SELECT cs.*, 
+          s.name as service_name, 
+          s.id as service_type,
+          m.email_address as master_email,
+          m.password as master_password
+   FROM client_services cs
+   JOIN services s ON cs.service_id = s.id
+   LEFT JOIN master_emails m ON cs.master_email_id = m.id
+   WHERE cs.client_id = ?
+   ORDER BY cs.expires_at ASC`
+).bind(client.id).all();
+
+---
+
+<Layout title="My Dashboard">
+    <div class="min-h-screen flex flex-col items-center justify-center p-6 bg-radial from-[#222] to-black">
+        <div class="max-w-4xl w-full">
+            <div class="mb-6 text-center border-b border-gray-800 pb-6">
+                <h1 class="text-4xl font-bold text-white mb-2">Client Dashboard</h1>
+                <p class="text-gray-400">Welcome, <span class="font-bold text-gray-200">{client.name}</span></p>
+                <p class="text-xs text-gray-600 mt-2 font-mono">ID: {client.id}</p>
+            </div>
+
+            <div data-client-id={client.id} data-client-name={client.name}>
+                <ClientDashboard client:load clientId={client.id.toString()} clientName={client.name} />
+            </div>
+        </div>
+    </div>
+</Layout>

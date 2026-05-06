@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AdminDashboard from '../components/AdminDashboard';
+
+const accessToken = Astro.cookies.get('admin_access_token');
+if (!accessToken || !accessToken.value) {
+  return Astro.redirect('/admin-login');
+}
+---
+
+<Layout title="Admin - Netflix Resale Manager">
+  <div class="bg-black min-h-screen py-10">
+    <AdminDashboard client:only="react" />
+  </div>
+</Layout>
